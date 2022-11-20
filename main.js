@@ -34,9 +34,31 @@ const gameBoard = (() => {
       displayControl.updateBoard()
     }
 
+    // return the Boards X and O positions
+    // probably smarter way
+    const returnBoard = () => {
+
+    let x_arry = []
+    let o_array = []
+    
+    for (let i = 0; i < board.length; i++){
+      if (board[i] === "X"){
+        x_arry.push(i);
+      }else if (board[i] === "O"){
+        o_array.push(i);
+      }
+    }
+
+    return [x_arry, o_array]
+
+    };
+
+
+
+
     const printBoard = () => console.log(board)
 
-    return {changeBoard, boardLenght, boardSymbol, resetBoard, printBoard}
+    return {changeBoard, boardLenght, boardSymbol, resetBoard, printBoard, returnBoard}
 })();
 
 
@@ -55,25 +77,23 @@ const displayControl = (() => {
     fields.forEach((field) => field.addEventListener("click", (e) =>{
       // the position to change
       let position = e.target.dataset.num;
-      let player = gameControl.getCurrentPlayer();
       // if the spot is empty play the move
       if (e.target.innerHTML === ""){
-
         // the sign to be puted in
         gameControl.playRound(position);
-        // Change the board and update it
-        gameBoard.changeBoard(player.getSign(), position);
+        // Update the board after a move was played
         updateBoard();
+        // update the text who is playing next
         updatePlayerText();
       }
     }))
 
+    // add a event listener to the reset button, if clicked game is reseted
     reset_button.addEventListener("click", () =>{
       gameBoard.resetBoard()
       gameControl.changeRound(1)
       updatePlayerText();
     })
-
 
     // Update the board display
     const updateBoard = () => {
@@ -103,6 +123,18 @@ const displayControl = (() => {
 
 const gameControl = (() => {
 
+
+  const w_combinations = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6],
+  ]
+
   // X fängt immer an 
 
   const player1 = Player("aco", "X");
@@ -111,9 +143,12 @@ const gameControl = (() => {
 
 
   const playRound = (index_of_sign) =>{
-    checkIfTie();
+    // Change the board and update it
+    gameBoard.changeBoard(getCurrentPlayer().getSign(), index_of_sign);
+    // check if a winner is on the board
+    checkifWinner();
+    // Add a round
     round++
-    console.log(round)
   }
 
   // get the current player depening on the round that is being played
@@ -122,18 +157,35 @@ const gameControl = (() => {
     return current
   }
 
-  const checkIfTie  = () => {
-    if (round === 9){
-      round = 1;
-    }
-  }
 
   const changeRound = (num) => round = num; 
 
   const checkifWinner = () => {
+    // smarter Way
     // check if 3 in a row
+    // get the indexes of the symbols in a array on the board
+    let x_array = gameBoard.returnBoard()[0]
+    let o_array = gameBoard.returnBoard()[1]
+
+    // for every winning combination check if it matches the X array and the O array, if match is bigger than 3 we have a winner
+    for(let i = 0; i < w_combinations.length; i++){
+      let difference_x = x_array.filter(element => w_combinations[i].includes(element))
+      let difference_o = o_array.filter(element => w_combinations[i].includes(element))
+      if (difference_x.length === 3){
+        declareWinner(getCurrentPlayer())
+      }else if (difference_o.length ===3){
+        declareWinner(getCurrentPlayer())
+      }
+    }
+    if (round === 8){
+      declareWinner("Tie")
+    }
+
   }
 
+  const declareWinner = (x) =>{
+    x === "Tie" ?  console.log(x) : console.log(x.getName()) 
+  }
 
   return {playRound, getCurrentPlayer, changeRound}
 
