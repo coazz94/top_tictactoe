@@ -1,0 +1,9 @@
+TODO:
+
+
+
+    Add front Page where you have to put in player names, if not default Player 1 und player 2
+    Add player name selection 
+    Add red background when user tries to choose a filed that already exists
+    Try other logic for Winner check
+    AI 
