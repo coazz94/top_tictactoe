@@ -53,25 +53,32 @@ const gameBoard = (() => {
 
     };
 
-
-
-
     const printBoard = () => console.log(board)
 
     return {changeBoard, boardLenght, boardSymbol, resetBoard, printBoard, returnBoard}
 })();
 
 
-
 const displayControl = (() => {
     // Get all the fields from the html
     let fields = document.querySelectorAll("[id^=square_]");
     let player_text = document.getElementById("playingtext");
-    let reset_button = document.getElementById("r_button");
+    const reset_button = document.getElementById("r_button");
+    const new_game_btt = document.getElementById("newg_btt");
+    const gameground = document.querySelector(".gameground");
+    const winnerwindow = document.querySelector(".winnerwindow");
+
+
 
     // if dom loaded change player text
     document.addEventListener("DOMContentLoaded", () => {
       updatePlayerText();
+      
+      new_game_btt.addEventListener("click", () =>{
+        new_game()
+
+          
+      })
     })
     // for each field add a eventlistener and print out the square
     fields.forEach((field) => field.addEventListener("click", (e) =>{
@@ -114,9 +121,22 @@ const displayControl = (() => {
       player_text.innerHTML = `Player ${player.getName()} is playing`
     }
 
+    const winnerText = (winner) =>{
+      gameground.classList.add("hidden")
+      winnerwindow.classList.remove("hidden")
+      let winner_text = winner == "Tie" ?  "It´s a Tie, nobody wins !" : `${winner} is the winner !`
+      document.getElementById("winner text").innerHTML = `${winner_text}`;
+    };
 
+    const new_game = () =>{
+      gameBoard.resetBoard()
+      gameControl.changeRound(0)
+      winnerwindow.classList.add("hidden")
+      gameground.classList.remove("hidden")
 
-    return{updateBoard}
+    }
+
+    return{updateBoard, winnerText}
 
 })();
 
@@ -136,7 +156,6 @@ const gameControl = (() => {
   ]
 
   // X fängt immer an 
-
   const player1 = Player("aco", "X");
   const player2 = Player("jelena", "O");
   let round = 0;
@@ -157,7 +176,6 @@ const gameControl = (() => {
     return current
   }
 
-
   const changeRound = (num) => round = num; 
 
   const checkifWinner = () => {
@@ -172,9 +190,9 @@ const gameControl = (() => {
       let difference_x = x_array.filter(element => w_combinations[i].includes(element))
       let difference_o = o_array.filter(element => w_combinations[i].includes(element))
       if (difference_x.length === 3){
-        declareWinner(getCurrentPlayer())
+        declareWinner(getCurrentPlayer().getName())
       }else if (difference_o.length ===3){
-        declareWinner(getCurrentPlayer())
+        declareWinner(getCurrentPlayer().getName())
       }
     }
     if (round === 8){
@@ -183,8 +201,9 @@ const gameControl = (() => {
 
   }
 
-  const declareWinner = (x) =>{
-    x === "Tie" ?  console.log(x) : console.log(x.getName()) 
+  // call the function to change the text
+  const declareWinner = (player) =>{
+    displayControl.winnerText(player);
   }
 
   return {playRound, getCurrentPlayer, changeRound}

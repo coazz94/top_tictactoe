@@ -19,26 +19,32 @@ body {
 .heading{
     /* border: 1px solid blue; */
     display: flex;
-    height: 10rem;
+    height: 10%;
 }
 
-.gameground{
+.gameground, .winnerwindow{
     border: 1px solid red;
     display: flex;
-    height: 100%;
+    height: 90%;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
 
+.gameground.hidden {
+    display:none 
+}
+
 .board{
     display: grid;
     /* border: 1px solid rgb(0, 0, 0); */
-    width: 30rem;
-    height: 30rem;
+    width: 20rem;
+    height: 20rem;
     grid-template-columns: repeat(3, calc(100%/3));
     grid-template-rows: repeat(3, calc(100%/3));
 }
+
+
 
 #playingtext{
     /* border: 1px solid black; */
@@ -63,4 +69,26 @@ body {
     width: 10rem;
     height: auto;
     font-size: 20px;
+}
+
+
+/* ---------------------Winner----------------------- */
+
+.container {
+    display: flex;
+    border: 1px solid yellow;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 50px;
+    height: 80%;
+    gap: 4rem;
+}
+
+.btn.btn-success {
+    font-size: 20px;
+}
+
+.winnerwindow.hidden{
+    display:none 
 }
