@@ -107,11 +107,26 @@ body {
     gap: 4rem;
 }
 
-.player_select{
+#test{
     display: flex;
+    /* border: 1px solid red; */
+    flex-direction: column;
 }
 
+.player_select{
+    /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+}
 
 .startscreen.hidden{
     display: none;
+}
+
+#st_btt{
+    margin-top: 2rem;
+}
+
+.p_input{
+    margin-top: 2rem;
 }

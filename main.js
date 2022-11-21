@@ -171,8 +171,6 @@ const gameControl = (() => {
     player2 = Player(n2, "O");
   }
 
-
-
   const playRound = (index_of_sign) =>{
     // Change the board and update it
     gameBoard.changeBoard(getCurrentPlayer().getSign(), index_of_sign);
@@ -188,6 +186,7 @@ const gameControl = (() => {
     return current
   }
 
+  // change the round
   const changeRound = (num) => round = num; 
 
   const checkifWinner = () => {
@@ -217,37 +216,40 @@ const gameControl = (() => {
     displayControl.winnerText(player);
   }
 
-  return {playRound, getCurrentPlayer, changeRound, create_player}
+  return {playRound, getCurrentPlayer, create_player}
 
 })();
 
 
 const Load_data = (()=>{
 
+  // Declare the variables
   let player1_name = document.getElementById("p1");
   let player2_name = document.getElementById("p2");
   const start_btt = document.getElementById("st_btt");
   const err_txt = document.getElementById("err_txt")
 
+  // add to the start button the functions
   start_btt.addEventListener("click", () =>{
+    // loadPlayers()
     checkIfEmpty() ? startGame(player1_name.value, player2_name.value) : printError()
-    
   })
 
-  
-
+  // start the game
   const startGame = (n1, n2) => {
     gameControl.create_player(n1, n2)
     displayControl.loadScreen()
   }
 
+  // Check if the input is empty
   const checkIfEmpty = () =>{
-    if (player1_name.value.length > 3 || player2_name.value > 3){
+    if (player1_name.value.length > 3 && player2_name.value.length > 3){
       return true;
     }
     return false;
   }
   
+  // Print a error if not both players
   const printError = () => 
     err_txt.innerHTML = "Please put in names for the players"
 

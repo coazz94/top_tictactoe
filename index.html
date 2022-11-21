@@ -36,18 +36,24 @@
         </div>
         <!-- <div class="startscreen hidden "> -->
         <div class="startscreen">
-            <div class="playser_select">
-                <form onsubmit="return mysubmit(event)">
-                    <div>Player 1</div>
-                    <input id="p1" type="text" required>
-                    <div>Player 2</div>
-                    <input id="p2" type="text" required>
-                    <button id="st_btt" type="submit">Start the game</button>
-                </form>
+            <div class="player_select">
+                <div>
+                    <p id="err_txt"></p>
+                </div>
+                <form id="test" onsubmit="return mysubmit(event)">
+                    <div class="p_input">
+                        <div>Player 1</div>
+                        <input id="p1" type="text" required>
+                    </div>
+                    <div class="p_input">
+                        <div>Player 2</div>
+                        <input id="p2" type="text" required>
+                    </div>
+                </form>´
+                <button id="st_btt" type="submit">Start the game</button>
+
             </div>
-            <div>
-                <p id="err_txt"></p>
-            </div>
+
 
         </div>
         <div class="winnerwindow hidden">
