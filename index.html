@@ -16,7 +16,8 @@
             <div>
             </div>
         </div>
-        <div class="gameground" id="gground">
+        <div class="gameground hidden" id="gground">
+        <!-- <div class="gameground" id="gground"> -->
             <div id="playingtext"></div>
             <div class="board">
                 <div data-num="0" id="square_0"></div>
@@ -32,6 +33,22 @@
             <div>
                 <button class="btn btn-success" id="r_button">Reset</button>
             </div>
+        </div>
+        <!-- <div class="startscreen hidden "> -->
+        <div class="startscreen">
+            <div class="playser_select">
+                <form onsubmit="return mysubmit(event)">
+                    <div>Player 1</div>
+                    <input id="p1" type="text" required>
+                    <div>Player 2</div>
+                    <input id="p2" type="text" required>
+                    <button id="st_btt" type="submit">Start the game</button>
+                </form>
+            </div>
+            <div>
+                <p id="err_txt"></p>
+            </div>
+
         </div>
         <div class="winnerwindow hidden">
             <div class="container">

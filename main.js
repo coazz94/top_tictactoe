@@ -1,4 +1,8 @@
 
+const mysubmit = (e) => {
+  e.preventDefault();
+  return false;
+}
 
 const Player = (name, sign) => {
 
@@ -8,7 +12,6 @@ const Player = (name, sign) => {
 
     return{getSign, getName}
 }
-
 
 const gameBoard = (() => {
 
@@ -67,19 +70,23 @@ const displayControl = (() => {
     const new_game_btt = document.getElementById("newg_btt");
     const gameground = document.querySelector(".gameground");
     const winnerwindow = document.querySelector(".winnerwindow");
+    const startscreen = document.querySelector(".startscreen");
+    
 
 
-
-    // if dom loaded change player text
-    document.addEventListener("DOMContentLoaded", () => {
+    const loadScreen = () => {
+      startscreen.classList.add("hidden");
+      gameground.classList.remove("hidden");
       updatePlayerText();
-      
-      new_game_btt.addEventListener("click", () =>{
-        new_game()
+      new_game_btt.addEventListener("click", () => new_game());
+    };
 
-          
-      })
-    })
+    // // if dom loaded change player text
+    // document.addEventListener("DOMContentLoaded", () => {
+    //   updatePlayerText();
+    //   new_game_btt.addEventListener("click", () => new_game());
+    // })
+
     // for each field add a eventlistener and print out the square
     fields.forEach((field) => field.addEventListener("click", (e) =>{
       // the position to change
@@ -136,7 +143,7 @@ const displayControl = (() => {
 
     }
 
-    return{updateBoard, winnerText}
+    return{updateBoard, winnerText, loadScreen}
 
 })();
 
@@ -155,10 +162,15 @@ const gameControl = (() => {
     [2,4,6],
   ]
 
-  // X fängt immer an 
-  const player1 = Player("aco", "X");
-  const player2 = Player("jelena", "O");
+  let player1 = "";
+  let player2 = "";
   let round = 0;
+
+  const create_player = (n1, n2) => {
+    player1 = Player(n1, "X");
+    player2 = Player(n2, "O");
+  }
+
 
 
   const playRound = (index_of_sign) =>{
@@ -179,7 +191,6 @@ const gameControl = (() => {
   const changeRound = (num) => round = num; 
 
   const checkifWinner = () => {
-    // smarter Way
     // check if 3 in a row
     // get the indexes of the symbols in a array on the board
     let x_array = gameBoard.returnBoard()[0]
@@ -191,7 +202,7 @@ const gameControl = (() => {
       let difference_o = o_array.filter(element => w_combinations[i].includes(element))
       if (difference_x.length === 3){
         declareWinner(getCurrentPlayer().getName())
-      }else if (difference_o.length ===3){
+      }else if (difference_o.length === 3){
         declareWinner(getCurrentPlayer().getName())
       }
     }
@@ -206,6 +217,38 @@ const gameControl = (() => {
     displayControl.winnerText(player);
   }
 
-  return {playRound, getCurrentPlayer, changeRound}
+  return {playRound, getCurrentPlayer, changeRound, create_player}
+
+})();
+
+
+const Load_data = (()=>{
+
+  let player1_name = document.getElementById("p1");
+  let player2_name = document.getElementById("p2");
+  const start_btt = document.getElementById("st_btt");
+  const err_txt = document.getElementById("err_txt")
+
+  start_btt.addEventListener("click", () =>{
+    checkIfEmpty() ? startGame(player1_name.value, player2_name.value) : printError()
+    
+  })
+
+  
+
+  const startGame = (n1, n2) => {
+    gameControl.create_player(n1, n2)
+    displayControl.loadScreen()
+  }
+
+  const checkIfEmpty = () =>{
+    if (player1_name.value.length > 3 || player2_name.value > 3){
+      return true;
+    }
+    return false;
+  }
+  
+  const printError = () => 
+    err_txt.innerHTML = "Please put in names for the players"
 
 })();
