@@ -20,10 +20,19 @@ body {
     /* border: 1px solid blue; */
     display: flex;
     height: 10%;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+}
+
+.footer {
+    display: flex;
+    /* border: 1px solid blue; */
+    justify-content: center;
 }
 
 .gameground, .winnerwindow{
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     height: 90%;
     justify-content: flex-start;
@@ -76,7 +85,7 @@ body {
 
 .container {
     display: flex;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -99,7 +108,7 @@ body {
 
 .startscreen{
     display: flex;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     justify-content: center;
     align-items: center;
     font-size: 20px;
@@ -107,26 +116,40 @@ body {
     gap: 4rem;
 }
 
-#test{
-    display: flex;
-    /* border: 1px solid red; */
-    flex-direction: column;
+.startscreen.hidden{
+    display: none;
 }
 
 .player_select{
     /* border: 1px solid blue; */
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.startscreen.hidden{
-    display: none;
+#inputs{
+    display: flex;
+    /* border: 1px solid red; */
+    flex-direction: column;
 }
+
 
 #st_btt{
     margin-top: 2rem;
+    width: 10rem;
 }
 
 .p_input{
     margin-top: 2rem;
+}
+
+#git_img{
+    margin-left: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#err_txt{
+    color: rgb(255, 196, 0);
+    font-weight: 400;
 }
